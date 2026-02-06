@@ -1,3 +1,8 @@
-from django.shortcuts import render
+from rest_framework import viewsets
+from goals.models import Goal
+from goals.serializers import GoalSerializer
 
-# Create your views here.
+
+class GoalViewSet(viewsets.ModelViewSet):
+    queryset = Goal.objects.all()
+    serializer_class = GoalSerializer
