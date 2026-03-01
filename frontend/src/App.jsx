@@ -22,15 +22,16 @@ function App() {
   
   const createGoal = async () => {
     if (!newTitle.trim()) return
-
-    await axios.post("http://127.0.0.1:8000/api/goals/", {
-      title: newTitle
-    })
-    setNewTitle("")
-    fetchGoals()
+  try {
+   const response = await axios.post("http://127.0.0.1:8000/api/goals/", {title: newTitle })
+  setGoals(prev => [...prev, response.data])
+    setNewTitle("")}
+    
+   catch (error)
+{
+  console.error("Create error:", error)
+}
   }
-
-
   return (
     <>
       <h1>Learning Goals</h1>
