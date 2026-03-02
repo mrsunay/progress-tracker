@@ -1,9 +1,11 @@
 import { useEffect, useState } from "react"
 import axios from "axios"
+import GoalList from "./components/GoalList"
+import GoalForm from "./components/GoalForm"
 
 function App() {
   const [goals, setGoals] = useState([])
-  const [newTitle, setNewTitle] = useState("")
+  
 
       const fetchGoals = async () => {
       try {
@@ -14,17 +16,13 @@ function App() {
         console.error("Fetch error:", error)
       }
     }
-  const createGoal = async () => {
-    if (!newTitle.trim()) return
-  try {
-   const response = await axios.post("http://127.0.0.1:8000/api/goals/", {title: newTitle })
-  setGoals(prev => [...prev, response.data])
-    setNewTitle("")}
-    
-   catch (error)
-{
-  console.error("Create error:", error)
-}
+      const createGoal = async (title) => {
+        const response = await axios.post(
+          "http://127.0.0.1:8000/api/goals/",
+           { title }
+  )
+
+            setGoals([...goals, response.data])
   }
 
   const deleteGoal = async (id) => {
@@ -44,14 +42,10 @@ function App() {
   return (
     <>
       <h1>Learning Goals</h1>
-      {goals.map(goal => (
-        <div key={goal.id}>{goal.title}<button onClick={() => deleteGoal(goal.id)}>delete</button></div>
-        
-      ))}
-      <input value={newTitle} onChange={(e)=> setNewTitle(e.target.value)} placeholder="Enter new goal"></input>
-    <button onClick={createGoal}>Create Goal</button>
+      <GoalForm onCreate={createGoal} />
+      <GoalList goals={goals} onDelete={deleteGoal} />
+      
     </>
-    
   )
 }
 
