@@ -5,6 +5,8 @@ import GoalForm from "./components/GoalForm"
 
 function App() {
   const [goals, setGoals] = useState([])
+  const [loading, setLoading] = useState(true)
+  const [error, setError] = useState(null)
   
 
       const fetchGoals = async () => {
@@ -14,6 +16,9 @@ function App() {
         setGoals(response.data || [])
       } catch (error) {
         console.error("Fetch error:", error)
+        setError(error)
+      } finally {
+        setLoading(false)
       }
     }
       const createGoal = async (title) => {
@@ -38,6 +43,13 @@ function App() {
     fetchGoals()
   }, [])
   
+
+  if (loading){
+      return <p>Loading...</p>
+        }
+  if (error) {
+          return <p>Error: {error.message}</p>
+        }
 
   return (
     <>
