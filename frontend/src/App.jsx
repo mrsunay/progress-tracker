@@ -38,6 +38,17 @@ function App() {
       console.error("Delete error:", error)
     }
   }
+  const editGoal = async (id, newTitle) => {
+    try {
+      const response = await axios.patch(
+        `http://127.0.0.1:8000/api/goals/${id}/`,
+        { title: newTitle }
+      )
+      setGoals(prev => prev.map(goal => (goal.id === id ? response.data : goal)))
+    } catch (error) {
+      console.error("Edit error:", error)
+    }
+  }
 
   useEffect(() => {
     fetchGoals()
@@ -55,7 +66,7 @@ function App() {
     <>
       <h1>Learning Goals</h1>
       <GoalForm onCreate={createGoal} />
-      <GoalList goals={goals} onDelete={deleteGoal} />
+      <GoalList goals={goals} onDelete={deleteGoal} onEdit={editGoal} />
       
     </>
   )
