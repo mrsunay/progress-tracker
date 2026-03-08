@@ -42,14 +42,15 @@ The project was built to practice full-stack architecture, API design, and front
 
 The application follows a separated frontend/backend architecture.
 
+```
 React UI
-↓
+   ↓
 Axios HTTP Requests
-↓
+   ↓
 Django REST API
-↓
+   ↓
 SQLite Database
-
+```
 
 React manages UI state and communicates with the Django backend through REST API endpoints.
 
@@ -59,18 +60,19 @@ State updates are handled locally after successful API mutations to avoid unnece
 
 ## Project Structure
 
+```
 frontend/
-src/
-components/
-GoalForm.jsx
-GoalList.jsx
-GoalItem.jsx
-App.jsx
+  src/
+    components/
+      GoalForm.jsx
+      GoalList.jsx
+      GoalItem.jsx
+    App.jsx
 
 backend/
-goals/
-config/
-
+  goals/
+  config/
+```
 
 Component responsibilities:
 
@@ -84,33 +86,48 @@ Component responsibilities:
 ## Running the Project
 
 ### Backend
+
+```
 cd backend
 python -m venv venv
 source venv/bin/activate
 pip install -r requirements.txt
 python manage.py migrate
 python manage.py runserver
+```
 
 Backend server runs on:
+
+```
 http://127.0.0.1:8000
+```
 
 ---
 
 ### Frontend
+
+```
 cd frontend
 npm install
 npm run dev
+```
 
 Frontend runs on:
+
+```
 http://localhost:5173
+```
 
 ---
 
 ## API Endpoints
-GET /api/goals/
-POST /api/goals/
-PATCH /api/goals/{id}/
-DELETE /api/goals/{id}/
+
+```
+GET     /api/goals/
+POST    /api/goals/
+PATCH   /api/goals/{id}/
+DELETE  /api/goals/{id}/
+```
 
 ---
 
