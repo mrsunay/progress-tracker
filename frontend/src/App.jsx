@@ -7,6 +7,7 @@ function App() {
   const [goals, setGoals] = useState([])
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState(null)
+  const [completed, setCompleted] = useState(false)
   
 
       const fetchGoals = async () => {
@@ -49,6 +50,17 @@ function App() {
       console.error("Edit error:", error)
     }
   }
+  const toggleCompleted = async (id, completed) => {
+    try {
+      const response = await axios.patch(
+        `http://127.0.0.1:8000/api/goals/${id}/`,
+        {completed: !completed }
+      )
+      setGoals(prev => prev.map(goal => (goal.id === id ? response.data : goal)))
+    } catch (error) {
+      console.error("Toggle completed error:", error)
+    }
+  }
 
   useEffect(() => {
     fetchGoals()
@@ -66,7 +78,7 @@ function App() {
     <>
       <h1>Learning Goals</h1>
       <GoalForm onCreate={createGoal} />
-      <GoalList goals={goals} onDelete={deleteGoal} onEdit={editGoal} />
+      <GoalList goals={goals} onDelete={deleteGoal} onEdit={editGoal} onToggleCompleted={toggleCompleted} />
       
     </>
   )

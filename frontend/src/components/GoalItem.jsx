@@ -2,11 +2,12 @@ import {useState} from "react"
 
 
 
-export default function GoalItem({ goal, onDelete, onEdit }) {
+export default function GoalItem({ goal, onDelete, onEdit, onToggleCompleted }) {
   const [isEditing, setIsEditing] = useState(false)
   const [editTitle, setEditTitle] = useState(goal.title)
+  
 
-if (isEditing) {
+  if (isEditing) {
     return (
       <div>
         <input
@@ -27,9 +28,12 @@ if (isEditing) {
   }
 
   return (
-    <div>
+    <div style={goal.completed ? { textDecoration: "line-through" } : {}}>
       {goal.title}
       <button onClick={() => setIsEditing(true)}>Edit</button>
+      <button onClick={() => onToggleCompleted(goal.id, !goal.completed)}>
+        {goal.completed ? "Mark Incomplete" : "Mark Completed"}
+      </button>
       <button onClick={() => onDelete(goal.id)}>Delete</button>
     </div>
   )
